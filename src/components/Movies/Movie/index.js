@@ -3,21 +3,27 @@ import { Card, CardActionArea, CardMedia, CardContent, Typography, makeStyles, G
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 345,
-        marginTop: 10
+        display: 'flex',
+        maxWidth: 300,
+        margin: 10
     },
     media: {
-        height: 140,
+        height: 350
+    },
+    details: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    content: {
+      flex: '1 0 auto',
+    },
+    cover: {
+      width: 151,
     },
 });
 function Movie(props) {
     const styles = useStyles();
     return (
-        // <div className="movie">
-        //     <h2>{props.title}</h2>
-        //     <img src={props.image === 'N/A' ? 'https://placehold.it/198x264&text=Image+Not+Found' : props.image} alt={props.title}/>
-        //     <h3>{props.year}</h3>
-        // </div>
         <Grid item xs={6} sm={3}>
             <Card className={styles.root}>
                 <CardActionArea>
