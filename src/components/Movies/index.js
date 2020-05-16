@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios'
 import Movie from './Movie';
+import { Grid } from '@material-ui/core';
 
 const API_KEY = 'eb7f19c3'
 
@@ -42,12 +42,16 @@ function Movies(props) {
     return (
         <div>
             { data !== null && data.length > 0 && data.map((movie, index) => (
-                <Movie 
-                    key={movie.imdbID}
-                    title={movie.Title}
-                    year={movie.Year}
-                    image={movie.Poster}
-                />
+                <Grid container spacing={3}>
+                    <Grid item xs={6} sm={3}>
+                        <Movie 
+                            key={movie.imdbID}
+                            title={movie.Title}
+                            year={movie.Year}
+                            image={movie.Poster}
+                        />
+                    </Grid>
+                </Grid>
             ))}
         </div>
     );
