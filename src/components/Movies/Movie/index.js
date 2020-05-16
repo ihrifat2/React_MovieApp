@@ -19,27 +19,23 @@ function Movie(props) {
         //     <h3>{props.year}</h3>
         // </div>
         <div style={{flexGrow: 1}}>
-            <Grid container spacing={3}>
-                <Grid item xs={6} sm={3}>
-                    <Card className={styles.root}>
-                        <CardActionArea>
-                            <CardMedia
-                                className={styles.media}
-                                image={props.image === 'N/A' ? 'https://placehold.it/198x264&text=Image+Not+Found' : props.image}
-                                title={props.title}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {props.title}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    {props.year}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                    </Card>
-                </Grid>
-            </Grid>
+            <Card className={styles.root}>
+                <CardActionArea>
+                    <CardMedia
+                        className={styles.media}
+                        image={props.image === 'N/A' ? 'https://placehold.it/198x264&text=Image+Not+Found' : props.image}
+                        title={props.title}
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="h2">
+                            {props.title}
+                        </Typography>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            {props.year}
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
         </div>
     );
 }
