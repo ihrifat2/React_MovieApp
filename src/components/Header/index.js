@@ -29,17 +29,17 @@ const useStyles = makeStyles((theme) =>
             justifyContent: 'center',
         },
         inputRoot: {
-          color: 'inherit',
+            color: 'inherit',
         },
         inputInput: {
-          padding: theme.spacing(1, 1, 1, 0),
-          // vertical padding + font size from searchIcon
-          paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-          transition: theme.transitions.create('width'),
-          width: '100%',
-          [theme.breakpoints.up('md')]: {
-            width: '20ch',
-          },
+            padding: theme.spacing(1, 1, 1, 0),
+            // vertical padding + font size from searchIcon
+            paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+            transition: theme.transitions.create('width'),
+            width: '100%',
+            [theme.breakpoints.up('md')]: {
+                width: '20ch',
+            },
         },
     })
 )
@@ -55,7 +55,7 @@ function Header(props) {
                         color="inherit"
                         aria-label="open drawer"
                     >
-                        <MenuIcon />
+                    <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
                         Movie Store
