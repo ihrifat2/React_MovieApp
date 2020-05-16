@@ -41,18 +41,16 @@ function Movies(props) {
     console.log(data)
     return (
         <div>
-            { data !== null && data.length > 0 && data.map((movie, index) => (
-                <Grid container spacing={3}>
-                    <Grid item xs={6} sm={3}>
-                        <Movie 
-                            key={movie.imdbID}
-                            title={movie.Title}
-                            year={movie.Year}
-                            image={movie.Poster}
-                        />
-                    </Grid>
-                </Grid>
-            ))}
+            <Grid container spacing={3}>
+                { data !== null && data.length > 0 && data.map((movie, index) => (
+                    <Movie 
+                        key={movie.imdbID}
+                        title={movie.Title}
+                        year={movie.Year}
+                        image={movie.Poster}
+                    />
+                ))}
+            </Grid>
         </div>
     );
 }
