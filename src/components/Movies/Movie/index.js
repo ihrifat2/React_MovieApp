@@ -18,7 +18,7 @@ function Movie(props) {
         //     <img src={props.image === 'N/A' ? 'https://placehold.it/198x264&text=Image+Not+Found' : props.image} alt={props.title}/>
         //     <h3>{props.year}</h3>
         // </div>
-        <div style={{flexGrow: 1}}>
+        <Grid item xs={6} sm={3}>
             <Card className={styles.root}>
                 <CardActionArea>
                     <CardMedia
@@ -36,7 +36,7 @@ function Movie(props) {
                     </CardContent>
                 </CardActionArea>
             </Card>
-        </div>
+        </Grid>
     );
 }
 
