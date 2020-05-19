@@ -71,6 +71,9 @@ function AllInOne(props) {const [data, setData] = useState(null);
     const [activateModal, setActivateModal] = useState(false);
     const [detail, setShowDetail] = useState(false);
     const [detailRequest, setDetailRequest] = useState(false);
+    const searchHandler = e => {
+        setQuery(e.target.value)
+    }
 
     useEffect(() => {
 
@@ -113,6 +116,7 @@ function AllInOne(props) {const [data, setData] = useState(null);
                     <Typography variant="h6" noWrap>
                         Movie Store
                     </Typography>
+                    <div style={{ flexGrow: 1 }} />
                     <div className={styles.search}>
                         <div className={styles.searchIcon}>
                             <SearchIcon />
@@ -124,37 +128,8 @@ function AllInOne(props) {const [data, setData] = useState(null);
                                 input: styles.inputInput,
                             }}
                             inputProps={{ 'aria-label': 'search' }}
+                            onChange={e => searchHandler(e)}
                         />
-                    </div>
-                    <div style={{ flexGrow: 1 }} />
-                    <div>
-                        <IconButton aria-label="show 4 new mails" color="inherit">
-                            <Badge badgeContent={4} color="secondary">
-                                <MailIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={17} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
-                        <IconButton
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-haspopup="true"
-                            color="inherit"
-                        >
-                            <AccountCircle />
-                        </IconButton>
-                    </div>
-                    <div>
-                        <IconButton
-                            aria-label="show more"
-                            aria-haspopup="true"
-                            color="inherit"
-                        >
-                            <MoreIcon />
-                        </IconButton>
                     </div>
                 </Toolbar>
             </AppBar>
