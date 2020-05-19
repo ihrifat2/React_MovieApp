@@ -1,6 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, makeStyles, createStyles, fade, Card, CardActionArea, CardMedia, CardContent, Grid } from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, makeStyles, createStyles, fade, Card, CardActionArea, CardMedia, CardContent, Grid, Modal } from '@material-ui/core'
 import { Menu as MenuIcon, Search as SearchIcon, Mail as MailIcon, Notifications as NotificationsIcon, More as MoreIcon, AccountCircle } from '@material-ui/icons'
+
+function rand() {
+    return Math.round(Math.random() * 20) - 10;
+}
+
+function getModalStyle() {
+    const top = 50 + rand();
+    const left = 50 + rand();
+
+    return {
+        top: `${top}%`,
+        left: `${left}%`,
+        transform: `translate(-${top}%, -${left}%)`,
+    };
+}
 
 const API_KEY = 'eb7f19c3'
 
@@ -15,14 +30,14 @@ const useStyles = makeStyles((theme) =>
             height: 350
         },
         details: {
-          display: 'flex',
-          flexDirection: 'column',
+            display: 'flex',
+            flexDirection: 'column',
         },
         content: {
-          flex: '1 0 auto',
+            flex: '1 0 auto',
         },
         cover: {
-          width: 151,
+            width: 151,
         },
         search: {
             position: 'relative',
@@ -61,10 +76,19 @@ const useStyles = makeStyles((theme) =>
                 width: '20ch',
             },
         },
+        modal: {
+            position: 'absolute',
+            width: 400,
+            backgroundColor: theme.palette.background.paper,
+            border: '2px solid #000',
+            boxShadow: theme.shadows[5],
+            padding: theme.spacing(2, 4, 3),
+        }
     })
 )
 
-function AllInOne(props) {const [data, setData] = useState(null);
+function AllInOne(props) {
+    const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
     const [q, setQuery] = useState('batman');
@@ -74,6 +98,14 @@ function AllInOne(props) {const [data, setData] = useState(null);
     const searchHandler = e => {
         setQuery(e.target.value)
     }
+    const cardClickHandler = () => {
+        console.log('modal open')
+        setActivateModal(true)
+    }
+    const handleClose = () => {
+        setActivateModal(false);
+    };
+    const [modalStyle] = useState(getModalStyle);
 
     useEffect(() => {
 
@@ -82,22 +114,22 @@ function AllInOne(props) {const [data, setData] = useState(null);
         setData(null);
 
         fetch(`http://www.omdbapi.com/?s=${q}&apikey=${API_KEY}`)
-        .then(resp => resp)
-        .then(resp => resp.json())
-        .then(response => {
-            if (response.Response === 'False') {
-                setError(response.Error);
-            }
-            else {
-                setData(response.Search);
-            }
+            .then(resp => resp)
+            .then(resp => resp.json())
+            .then(response => {
+                if (response.Response === 'False') {
+                    setError(response.Error);
+                }
+                else {
+                    setData(response.Search);
+                }
 
-            setLoading(false);
-        })
-        .catch(({message}) => {
-            setError(message);
-            setLoading(false);
-        })
+                setLoading(false);
+            })
+            .catch(({ message }) => {
+                setError(message);
+                setLoading(false);
+            })
 
     }, [q]);
     // console.log(data)
@@ -111,7 +143,7 @@ function AllInOne(props) {const [data, setData] = useState(null);
                         color="inherit"
                         aria-label="open drawer"
                     >
-                    <MenuIcon />
+                        <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" noWrap>
                         Movie Store
@@ -134,9 +166,9 @@ function AllInOne(props) {const [data, setData] = useState(null);
                 </Toolbar>
             </AppBar>
             <Grid container spacing={3}>
-                { data !== null && data.length > 0 && data.map((movie, index) => (
+                {data !== null && data.length > 0 && data.map((movie, index) => (
                     <Grid item xs={6} sm={3} key={movie.imdbID}>
-                        <Card className={styles.root}>
+                        <Card className={styles.root} onClick={() => cardClickHandler()}>
                             <CardActionArea>
                                 <CardMedia
                                     className={styles.media}
@@ -156,6 +188,19 @@ function AllInOne(props) {const [data, setData] = useState(null);
                     </Grid>
                 ))}
             </Grid>
+            <Modal
+                open={activateModal}
+                onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+            >
+                <div style={modalStyle} className={styles.modal}>
+                    <h2 id="simple-modal-title">Text in a modal</h2>
+                    <p id="simple-modal-description">
+                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                    </p>
+                </div>
+            </Modal>
         </div>
     );
 }
