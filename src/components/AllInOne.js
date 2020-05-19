@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, makeStyles, createStyles, fade, Card, CardActionArea, CardMedia, CardContent, Grid, Modal } from '@material-ui/core'
 import { Menu as MenuIcon, Search as SearchIcon, Mail as MailIcon, Notifications as NotificationsIcon, More as MoreIcon, AccountCircle } from '@material-ui/icons'
 
 function rand() {
-    return Math.round(Math.random() * 20) - 10;
+    return Math.round(Math.random() * 20) - 10
 }
 
 function getModalStyle() {
-    const top = 50 + rand();
-    const left = 50 + rand();
+    const top = 50 + rand()
+    const left = 50 + rand()
 
     return {
         top: `${top}%`,
         left: `${left}%`,
         transform: `translate(-${top}%, -${left}%)`,
-    };
+    }
 }
 
 const API_KEY = 'eb7f19c3'
@@ -88,50 +88,61 @@ const useStyles = makeStyles((theme) =>
 )
 
 function AllInOne(props) {
-    const [data, setData] = useState(null);
-    const [error, setError] = useState(null);
-    const [loading, setLoading] = useState(false);
-    const [q, setQuery] = useState('batman');
-    const [activateModal, setActivateModal] = useState(false);
-    const [detail, setShowDetail] = useState(false);
-    const [detailRequest, setDetailRequest] = useState(false);
+    const [data, setData] = useState(null)
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const [q, setQuery] = useState('batman')
+    const [activateModal, setActivateModal] = useState(false)
+    const [detail, setShowDetail] = useState(false)
+    const [detailRequest, setDetailRequest] = useState(false)
     const searchHandler = e => {
         setQuery(e.target.value)
     }
-    const cardClickHandler = () => {
-        console.log('modal open')
+    const cardClickHandler = (imdbID) => {
         setActivateModal(true)
+        setDetailRequest(true)
+        fetch(`http://www.omdbapi.com/?i=${imdbID}&apikey=${API_KEY}`)
+            .then(resp => resp)
+            .then(resp => resp.json())
+            .then(response => {
+                setDetailRequest(false)
+                setShowDetail(response)
+                console.log(response)
+            })
+            .catch(({ message }) => {
+                setDetailRequest(false)
+            })
     }
     const handleClose = () => {
-        setActivateModal(false);
-    };
-    const [modalStyle] = useState(getModalStyle);
+        setActivateModal(false)
+    }
+    const [modalStyle] = useState(getModalStyle)
 
     useEffect(() => {
 
-        setLoading(true);
-        setError(null);
-        setData(null);
+        setLoading(true)
+        setError(null)
+        setData(null)
 
         fetch(`http://www.omdbapi.com/?s=${q}&apikey=${API_KEY}`)
             .then(resp => resp)
             .then(resp => resp.json())
             .then(response => {
                 if (response.Response === 'False') {
-                    setError(response.Error);
+                    setError(response.Error)
                 }
                 else {
-                    setData(response.Search);
+                    setData(response.Search)
                 }
 
-                setLoading(false);
+                setLoading(false)
             })
             .catch(({ message }) => {
-                setError(message);
-                setLoading(false);
+                setError(message)
+                setLoading(false)
             })
 
-    }, [q]);
+    }, [q])
     // console.log(data)
     const styles = useStyles()
     return (
@@ -168,7 +179,7 @@ function AllInOne(props) {
             <Grid container spacing={3}>
                 {data !== null && data.length > 0 && data.map((movie, index) => (
                     <Grid item xs={6} sm={3} key={movie.imdbID}>
-                        <Card className={styles.root} onClick={() => cardClickHandler()}>
+                        <Card className={styles.root} onClick={() => cardClickHandler(movie.imdbID)}>
                             <CardActionArea>
                                 <CardMedia
                                     className={styles.media}
@@ -202,7 +213,7 @@ function AllInOne(props) {
                 </div>
             </Modal>
         </div>
-    );
+    )
 }
 
-export default AllInOne;
+export default AllInOne
