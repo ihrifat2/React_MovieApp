@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, makeStyles, createStyles, fade, Card, CardActionArea, CardMedia, CardContent, Grid, Modal } from '@material-ui/core'
-import { Menu as MenuIcon, Search as SearchIcon, Mail as MailIcon, Notifications as NotificationsIcon, More as MoreIcon, AccountCircle } from '@material-ui/icons'
+import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 
-function rand() {
+const rand = () => {
     return Math.round(Math.random() * 20) - 10
 }
 
-function getModalStyle() {
+const getModalStyle = () => {
     const top = 50 + rand()
     const left = 50 + rand()
 
@@ -117,6 +117,30 @@ function AllInOne(props) {
         setActivateModal(false)
     }
     const [modalStyle] = useState(getModalStyle)
+    const MovieDetail = ({ Title, Poster, imdbRating, Rated, Runtime, Genre, Plot }) => {
+        return (
+            <Card className={styles.root}>
+                <div className={styles.details}>
+                    <CardContent className={styles.content}>
+                        <Typography component="h5" variant="h5">
+                            {Title}
+                        </Typography>
+                        {/* <Typography variant="subtitle1" color="textSecondary">
+                        Mac Miller
+                    </Typography> */}
+                        <Typography>{Rated}</Typography>
+                        <Typography>{Runtime}</Typography>
+                        <Typography>{Genre}</Typography>
+                    </CardContent>
+                </div>
+                <CardMedia
+                    // className={classes.cover}
+                    image={Poster === 'N/A' ? 'https://placehold.it/198x264&text=Image+Not+Found' : Poster}
+                    title={Title}
+                />
+            </Card>
+        )
+    }
 
     useEffect(() => {
 
@@ -205,12 +229,17 @@ function AllInOne(props) {
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
             >
-                <div style={modalStyle} className={styles.modal}>
+                {
+                    detailRequest === false ?
+                    (<MovieDetail {...detail} />) :
+                    null
+                }
+                {/* <div style={modalStyle} className={styles.modal}>
                     <h2 id="simple-modal-title">Text in a modal</h2>
                     <p id="simple-modal-description">
                         Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                     </p>
-                </div>
+                </div> */}
             </Modal>
         </div>
     )
