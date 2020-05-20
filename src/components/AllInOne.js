@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, makeStyles, createStyles, fade, Card, CardActionArea, CardMedia, CardContent, Grid, Modal } from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Badge, makeStyles, createStyles, fade, Card, CardActionArea, CardMedia, CardContent, Grid, Modal, CircularProgress } from '@material-ui/core'
 import { Menu as MenuIcon, Search as SearchIcon } from '@material-ui/icons'
 
 const rand = () => {
@@ -128,6 +128,7 @@ function AllInOne(props) {
                         {/* <Typography variant="subtitle1" color="textSecondary">
                         Mac Miller
                     </Typography> */}
+                        <Typography>{imdbRating}</Typography>
                         <Typography>{Rated}</Typography>
                         <Typography>{Runtime}</Typography>
                         <Typography>{Genre}</Typography>
@@ -231,8 +232,10 @@ function AllInOne(props) {
             >
                 {
                     detailRequest === false ?
-                    (<MovieDetail {...detail} />) :
-                    null
+                    <div style={modalStyle} className={styles.modal}>
+                        <MovieDetail {...detail} />
+                    </div> :
+                    <CircularProgress />
                 }
                 {/* <div style={modalStyle} className={styles.modal}>
                     <h2 id="simple-modal-title">Text in a modal</h2>
